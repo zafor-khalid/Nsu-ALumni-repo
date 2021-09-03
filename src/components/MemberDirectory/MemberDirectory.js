@@ -1,7 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, ButtonToolbar, Form, FormControl, Table } from 'react-bootstrap';
 
+const arr = [
+    {
+        name: 'zafor',
+        department: 'CSE',
+        batch: 2011,
+        Occupation: "software Engineer"
+    },
+    {
+        name: 'khalid',
+        department: 'EEE',
+        batch: 2012,
+        Occupation: "Nothing"
+    },
+    {
+        name: 'asif',
+        department: 'ece',
+        batch: 2012,
+        Occupation: "Cader"
+    },
+    {
+        name: 'Mouno',
+        department: 'SE',
+        batch: 2022,
+        Occupation: "not applied"
+    },
+    {
+        name: 'arin',
+        department: 'economics',
+        batch: 2009,
+        Occupation: "Chartared Accountant"
+    },
+    {
+        name: 'afridi',
+        department: 'Cse',
+        batch: 2018,
+        Occupation: "software Engineer"
+    }, {
+        name: 'rashi',
+        department: 'BBA',
+        batch: 2016,
+        Occupation: "Manager"
+    },
+    {
+        name: 'ishfaq',
+        department: 'cse',
+        batch: 2019,
+        Occupation: "web developer"
+    }
+
+]
+
+
 const MemberDirectory = () => {
+    let [index, setIndex] = useState(0);
+
+    const handleNext = () => {
+        if (index !== arr.length - 1) {
+            setIndex(++index);
+        }
+
+    }
+    const handlePrevious = () => {
+        if (index !== 0) {
+            setIndex(--index);
+        }
+
+    }
     return (
         <>
             <div className="d-flex justify-content-center m-5">
@@ -27,32 +93,29 @@ const MemberDirectory = () => {
                 <Table striped bordered hover responsive variant="dark" style={{ width: '550px', borderLeft: '5px double #bd0000' }}>
 
                     <tbody>
-                        <tr>
-                            <td>Member Name</td>
-                            <td>Mark</td>
+                        <tr >
+                            <td style={{ width: '210px' }}>Member Name</td>
+                            <td style={{ width: '210px' }}> {arr[index].name} </td>
                         </tr>
                         <tr>
-                            <td>Department</td>
-                            <td>CSE</td>
+                            <td style={{ width: '210px' }}>Department</td>
+                            <td style={{ width: '210px' }}>{arr[index].department}</td>
                         </tr>
                         <tr>
-                            <td>Batch</td>
-                            <td>2018</td>
+                            <td style={{ width: '210px' }}>Batch</td>
+                            <td style={{ width: '210px' }}>{arr[index].batch}</td>
                         </tr>
+
                         <tr>
-                            <td>Role</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>Occupation</td>
-                            <td>Software Engineer</td>
+                            <td style={{ width: '210px' }}>Occupation</td>
+                            <td style={{ width: '210px' }}>{arr[index].Occupation}</td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
             <div className="text-center">
-                <Button className="mx-5" size="sm" variant='outline-success' style={{ borderRadius: '0', width: '75px' }}>Previous</Button>
-                <Button className="mx-5" size="sm" variant='outline-success' style={{ borderRadius: '0', width: '75px' }}>Next</Button>
+                <Button onClick={() => handlePrevious()} className="mx-5" size="sm" variant='outline-success' style={{ borderRadius: '0', width: '75px' }}>Previous</Button>
+                <Button onClick={() => handleNext()} className="mx-5" size="sm" variant='outline-success' style={{ borderRadius: '0', width: '75px' }}>Next</Button>
             </div>
 
         </>

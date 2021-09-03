@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, Card, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import pic1 from '../Images/pic-1.png';
+import { useHistory } from "react-router-dom";
+
+
 const Home = () => {
     return (
         <div>

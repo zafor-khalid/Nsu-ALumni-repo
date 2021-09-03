@@ -23,8 +23,13 @@ import AlumniStories from './components/AlumniStories/AlumniStories';
 import FundRaising from './components/FundRaising/FundRaising';
 import NewsAndPhotos from './components/NewsAndPhotos/NewsAndPhotos';
 import { store } from './redux/store'
-
-
+import Page from './components/AlumniStories/page'
+import currentReacher from './components/AlumniStories/currentReacher';
+import TopMentor from './components/AlumniStories/TopMentor';
+import Restricted from './components/AlumniStories/Restricted'
+import Programs from './components/Programs/Program';
+import DonationMethodes from './components/FundRaising/DonationMethodes';
+import CurrentPartners from './components/FundRaising/CurrentPartners';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -45,6 +50,14 @@ ReactDOM.render(
         <Route path="/stories" component={AlumniStories} />
         <Route path="/fundraising" component={FundRaising} />
         <Route path="/NewsAndPhotos" component={NewsAndPhotos} />
+        <Route path="/page" component={Page} />
+        <Route path="/currentReacher" component={currentReacher} />
+        <Route path="/TopMentor" component={TopMentor} />
+        <Route path="/Restricted" component={Restricted} />
+        <Route path="/Programs" component={Programs} />
+        <Route path="/DonationMethodes" component={DonationMethodes} />
+        <Route path="/CurrentPartners" component={CurrentPartners} />
+
         <Route path="*" component={<h1>nai</h1>} />
       </Switch>
 

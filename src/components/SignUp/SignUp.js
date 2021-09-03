@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from './firebase.config';
+import { useHistory } from "react-router-dom";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { Link } from 'react-router-dom';
 
 const auth = getAuth();
+
 const SignUp = () => {
+    const db = getFirestore();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [loginStatus, setLoginStatus] = useState(false);
+
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -14,9 +21,10 @@ const SignUp = () => {
         passingYear: '',
         department: ''
     });
+    let history = useHistory();
 
     const onSubmit = data => {
-        const { email, password, Name, Phone, PassingYear, Department } = data;
+        const { email, password, Name, Phone, PassingYear, Department, Occupation } = data;
         const displayName = Name;
         const phoneNumber = Phone;
 
@@ -29,8 +37,13 @@ const SignUp = () => {
                     email: email,
                     phone: Phone,
                     passingYear: PassingYear,
-                    department: Department
+                    department: Department,
+                    Occupation: Occupation
                 });
+
+                createDb(data);
+                history.push("/login");
+                alert("Sign up successful!");
                 console.log(user);
             })
             .catch((error) => {
@@ -39,8 +52,28 @@ const SignUp = () => {
                 alert(errorCode, errorMessage)
             });
 
-        console.log(user)
+        // console.log(user)
     };
+
+    const createDb = async (data) => {
+        const { email, password, Name, Phone, PassingYear, Department, Occupation } = data;
+        try {
+            const docRef = await addDoc(collection(db, "users"), {
+                name: Name,
+                email: email,
+                phone: Phone,
+                passingYear: PassingYear,
+                department: Department,
+                Occupation: Occupation
+            });
+            const washingtonRef = doc(db, "users", docRef.id);
+            await updateDoc(washingtonRef, { ID: docRef.id });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
+    }
 
     return (
         <div className='my-5 p-2'>
@@ -88,10 +121,17 @@ const SignUp = () => {
 
                 {/* errors will return when field validation fails  */}
                 {errors.Department && <span className='text-danger'>Department is required</span>}
+
+                <input className='text-dark form-control  mb-2' placeholder='Occupation' {...register("Occupation", { required: true })} />
+
+                {/* errors will return when field validation fails  */}
+                {errors.Occupation && <span className='text-danger'>Occupation is required</span>}
                 <br />
+
                 <input type="submit" className='btn btn-success mx-2' style={{ borderRadius: '0' }} />
                 <button type="" className='btn btn-success mx-2' style={{ borderRadius: '0' }}>Cancel</button>
             </form>
+            <h6 className="text-center my-2">If you already have an account  <Link to='/login' className="text-warning mx-2">Sign In</Link></h6>
         </div>
     );
 };

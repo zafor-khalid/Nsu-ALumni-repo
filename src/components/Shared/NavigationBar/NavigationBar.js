@@ -3,9 +3,15 @@ import React from 'react';
 import { FormControl, Nav, Navbar, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './NavigationBar.css'
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
 
 const NavigationBar = () => {
+    const dispatch = useDispatch();
+    const value = useSelector((state) => {
+        return (state.auth.email);
+    })
+
     return (
         <>
             <Navbar bg="dark" expand="lg">
@@ -30,8 +36,12 @@ const NavigationBar = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Link to='/login' className="text-warning mx-2">Sign In</Link>
-                        <Link to='/signup' className="text-warning mx-2">Join Now</Link>
+
+                        {
+                            value.length > 0 ?
+                                <h6 className="text-warning mx-5">{value.slice(0, 5)}</h6>
+                                : <Link to='/signup' className="text-warning mx-5">Join Now</Link>
+                        }
                     </Nav>
 
                 </Navbar.Collapse>
@@ -43,7 +53,7 @@ const NavigationBar = () => {
                 <Link to='/career'><Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>Career Oppurtunities</Button></Link>
                 <Link to='/NewsAndPhotos'> <Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>News & photos</Button></Link>
                 <Link to='/stories'>   <Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>ALumni stories</Button></Link>
-                <Link to='/events'><Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>Programs</Button></Link>
+                <Link to='/Programs'><Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>Programs</Button></Link>
 
                 <Link to='/events'><Button size='sm' className="btn-success m-1" style={{ borderRadius: '0px' }}>Events</Button></Link>
 
